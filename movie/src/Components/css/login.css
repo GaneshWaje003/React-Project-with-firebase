@@ -1,0 +1,135 @@
+.login-main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;    
+}
+
+.navbar{
+    flex: 0 0 auto;
+}
+
+.login-main-contianer{
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--body-login-back);
+}
+
+
+.login-container{
+    width: 60%;
+    height: 80%;
+    border-radius: 1rem;
+    background-color: var(--body-background);
+    display: flex;
+}
+
+.login-elements{
+    flex:60;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-header{
+    margin-bottom: 3rem;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.input-login{
+    margin-bottom: 2rem;
+    width: 60%;
+}
+
+
+.input-login input{
+    width: 100%;
+    outline:none;
+    padding: 0.5rem 0 0.5rem 0.4rem;
+    border-radius: 0.3rem;
+    border: 1.7px solid grey;
+}
+
+.input-login input:focus{
+    border:1.7px solid rgb(29, 28, 28);
+}
+
+.password{
+    display: flex;
+    flex-direction: column;
+}
+
+.password a{
+    align-self: flex-end;
+    text-decoration: none;
+}
+
+.login-button{
+    width: 60%;
+
+}
+
+.login-button button{
+    width: 100%;
+    padding: 0.4rem;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    cursor:pointer;
+    border-radius: 0.3rem;
+    color: var(--body-background);
+    background-color: var(--body-color);
+    margin-bottom: 2rem;
+}
+
+.login-with-google{
+    display: flex;
+    align-items: center;
+    padding: 0.4rem;
+    justify-content: center;
+    width: 60%;
+    background-color: var(--body-color);
+    color: var(--body-background);
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+.login-with-google img{
+    width: 1rem;
+    margin-right: 0.5rem;
+    aspect-ratio: 1/1;
+}
+
+
+
+
+.other-section{
+    flex:40;
+    background-color: rgb(15, 83, 156);
+    border-radius: 0 1rem 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.other-section-data{    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.other-section-data p{
+    color: var(--body-background);
+    font-size: 2rem;
+}

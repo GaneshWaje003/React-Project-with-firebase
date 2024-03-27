@@ -1,0 +1,21 @@
+*{
+  padding: 0;
+  margin:0;
+  box-sizing: border-box;
+}
+
+:root{
+  --body-color:rgb(15, 83, 156);
+  --body-background:#ffffff;
+  --body-nav-color:navy;
+  --body-login-back:rgb(117, 179, 245);
+  --body-nav-back:#f4f8fd;
+}
+
+[data-theme="dark"]{
+  --body-color:#fff;
+  --body-background:rgb(15, 83, 156);
+  --body-nav-color:#fff;
+  --body-login-back:#fff;
+  --body-nav-back:rgb(15, 83, 156);
+}
