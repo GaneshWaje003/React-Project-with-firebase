@@ -4,6 +4,7 @@ import google_logo from '../img/google_logo.svg'
 import Navbar from '../comp/Navbar'
 import { auth , googleProvider } from '../../config/firebase'
 import { createUserWithEmailAndPassword ,signOut , signInWithPopup} from 'firebase/auth'
+import { NavLink } from 'react-router-dom'
 
 export default function Login() {
 
@@ -79,6 +80,7 @@ export default function Login() {
 
                         <div className="login-button">
                             <button onClick={()=>writeData()} >Login</button>
+                            <NavLink to="/register" >Not Registered ?</NavLink>
                         </div>
 
                         <div onClick={googleSignIn} className="login-with-google">

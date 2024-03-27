@@ -1,0 +1,87 @@
+.register-main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-form
+{
+    width: 30%;
+    border: 1px solid black;
+    padding: 1rem;
+} 
+
+.container-form form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-reg{
+    text-align: center;
+}
+
+.register-input-container{
+    margin-bottom: 1rem;
+    width: 100%;
+    position: relative;
+}
+
+
+.register-input-container input{
+    padding: 0.5rem;
+    width: 100%;
+}    
+
+.reg-password img ,  .reg-username img{
+    width: 1.5rem;
+    position: absolute;
+    top: 50%;
+    margin-left: 0.5rem;
+    transform: translateY(-50%);
+    aspect-ratio: 1/1;
+}
+
+.register-main .reg-password input, .register-main .reg-username input {
+    padding: 0.5rem 2rem;
+}
+
+
+.reg-gender{
+    display: flex;
+    gap: 2rem;
+}
+
+.gender-container{
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+.verify-email{
+    margin-top: 0.4rem;
+    display: flex;
+    gap:3rem;
+}
+
+.verify-email input{
+    flex: 40;
+}
+
+.verify-email button{
+    flex: 20;
+}
+
+.reg-username img{
+    margin-left: 0.3rem;
+}

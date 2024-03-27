@@ -72,7 +72,10 @@
 
 .login-button{
     width: 60%;
-
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .login-button button{
@@ -86,8 +89,14 @@
     border-radius: 0.3rem;
     color: var(--body-background);
     background-color: var(--body-color);
-    margin-bottom: 2rem;
 }
+
+.login-button a{
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
 
 .login-with-google{
     display: flex;
