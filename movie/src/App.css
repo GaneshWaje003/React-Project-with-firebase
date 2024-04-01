@@ -19,3 +19,18 @@
   --body-login-back:#fff;
   --body-nav-back:rgb(15, 83, 156);
 }
+
+.app-main{
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar-container-home{
+  
+}
+
+.main-home{
+  flex:1;
+  /* border: 1px solid black; */
+  
+}

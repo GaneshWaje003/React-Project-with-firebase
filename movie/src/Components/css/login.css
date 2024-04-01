@@ -142,3 +142,13 @@
     color: var(--body-background);
     font-size: 2rem;
 }
+
+.other-section-data img{
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.login-error-p{
+    margin-top: 1rem;
+    color: red;
+}

@@ -5,14 +5,15 @@
     font-family: "Roboto", sans-serif;
     font-style: normal;
     box-shadow: 1px -1px 5px 1px #222;
-;
+    padding: 0.5rem;
+    background-color: var(--body-color);
     /* border:1px solid red; */
 }
 
 nav{
     display: flex;
     justify-content: space-between;
-    background-color: var(--body-nav-back);
+    background-color: var(--body-color);
 }
 
 nav ul{
@@ -25,15 +26,16 @@ nav li{
 }
 
 nav a{
-    color: var(--body-nav-color);
+    color: var(--body-background);
     text-decoration: none;
     display: block;
-    margin: 0.6rem 4rem;
+    margin-right:4rem;
     font-size: 1.2rem;
     font-weight: 500;
 }
 
 .other-members{
+    color: var(--body-background);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,4 +49,92 @@ nav a{
 .other-members img{
     width: 50px;
     height: 50px;
+}
+
+.logout-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border:1px solid black; */
+    margin-right: 2rem;
+    cursor: pointer;
+}
+
+.logout-section img{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin-right:0.5rem;
+}
+
+.logout-section label{
+}
+.main-reg-container{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.error-section{
+    margin-top: 1rem;
+    color: red;
+    transition: all 0.3s ease;
+}
+
+.dropdown{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropdown-options{
+    display: none;
+    position: absolute;
+    transition: all 0.5s ease;
+    top: 100%;
+    padding-top: 0.6rem;
+    text-align: center;
+}
+
+.dropdown-options a{
+    color:var(--body-background);
+    padding: 0.5rem 3rem;
+    background-color: var(--body-color);
+    transition: all 0.3s ease;
+    border-bottom: 1px solid var(--body-background);
+}
+
+.dropdown-options a:hover{
+    background-color:rgb(76, 146, 221);
+    color: white;
+    border-bottom: 1px solid black;
+}
+
+
+.dropdown:hover .dropdown-options {
+    display: block;
+}
+
+.search-container{
+    display: inline;
+    position: relative;
+}
+
+.search-container input{
+    padding: 0.3rem;
+    padding-left: 2rem;
+    background-color: var(--body-background);
+    color: var(--body-color);
+    outline: none;
+    border-radius: 0.2rem;
+}
+
+.search-container img{
+    width: 1.3rem;
+    position: absolute;
+    top:0;
+    left: 0;
+    left:1rem;
+    transform: translateX(-50%);
 }

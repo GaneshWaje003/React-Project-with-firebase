@@ -1,0 +1,46 @@
+.imgslider-main{
+    padding: 1rem 2rem;
+}
+
+.imgslider-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.images-imgslider{
+    width: 40vw;
+    height: 40vh;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.img-holder-1{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow-x: auto;
+    transition: transform 0.4s ease; /* Add transition effect for transform */
+}
+
+.img-holder-1 img{
+    height: 100%;
+    width: 100%;
+    max-width: 100%; /* Limit width to container size */
+    opacity: 1; /* Start with full opacity */
+    transition: opacity 0.4s ease; /* Add transition effect for opacity */
+    border-radius: 0.5rem;
+}
+.imgslider-container a{
+        text-decoration: none;
+        color: black;
+        font-size: 24px;
+        line-height: 40vh;
+        cursor: pointer;
+        margin-inline:1rem;
+}
+
+.imgslider-container a:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+}

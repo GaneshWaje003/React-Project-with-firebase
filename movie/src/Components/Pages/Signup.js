@@ -1,56 +1,95 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../css/signup.css';
 import userlogo from '../img/user_svg.svg';
 import keylogo from '../img/key_svg.svg';
-import { db } from '../../config/firebase';
+import { auth, db } from '../../config/firebase';
 import { collection, addDoc } from 'firebase/firestore';
+import Navbar from '../comp/Navbar';
+
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default function Signup() {
+    
     const moviecollectionRef = collection(db, "users");
+    const [userData,setUserData]=useState({});
+    const [formError,setFormError]=useState('');
+
 
     const registerUser = async (event) => {
+        
         event.preventDefault(); // Prevent default form submission behavior
-        try {
-            await addDoc(moviecollectionRef, {
-                email: "email@123",
-                gender: "male",
-                name: "namesdone",
-                password: "password",
-                username: "user123"
-            });
-            console.log("User registered successfully!");
-        } catch (error) {
-            console.error("Error registering user:", error);
+        
+        if(!userData.userfullname){
+            setFormError("Enter full name of user");
+        }else if(userData.username.length < 5 ){
+            setFormError("Username must greater than 5 letters")   
         }
+        else if(userData.password.length < 8 ){
+            setFormError("password  must greater than 8 letters")   
+        }
+        else{
+            setFormError("")   
+            await addDoc(moviecollectionRef,{
+                email:userData.email,
+                gender:"null",
+                name:userData.userfullname,
+                password:userData.password,
+                username:userData.username
+            }).then(()=>{
+                console.log("fire store success");
+            });
+
+            await createUserWithEmailAndPassword(auth,userData.email,userData.password).then(()=>{
+                console.log('User Created');
+            }).catch((err)=>{
+                console.log("error come while creating user : ",err);
+            });
+        }
+
     }
+
+    const handelInput=(e)=>{
+
+        setUserData(prevState=>({
+            ...prevState,[e.target.name]:e.target.value
+        }));
+    }   
 
     return (
         <div className='register-main'>
+
+            <div className="navbar-contianer-reg">
+                <Navbar/>
+            </div>
+
+            <div className="main-reg-container">
+
+
             <div className="container-form">
                 <form onSubmit={registerUser}>
                     <div className="register-input-container header-reg">
                         <h1>REGISTER</h1>
                     </div>
                     <div className="register-input-container reg-fullname">
-                        <input type="text" placeholder='Enter Full Name ' />
+                        <input onChange={(e)=>handelInput(e)} name='userfullname' type="text" placeholder='Enter Full Name ' required />
                     </div>
                     <div className="register-input-container reg-birthday">
                         <label htmlFor="birthdate">BirthData</label>
-                        <input id="birthdate" type="date" />
+                        <input onChange={(e)=>handelInput(e)} id="birthdate" type="date" />
                     </div>
                     <div className="register-input-container reg-gender">
                         <p>Gender</p>
                         <div className="gender-container male">
                             <label htmlFor="male">Male</label>
-                            <input id="male" type="radio" />
+                            <input  id="male" type="radio" />
                         </div>
                         <div className="gender-container female">
                             <label htmlFor="female">Female</label>
-                            <input id="female" type="radio" />
+                            <input name='gender' id="female" type="radio" />
                         </div>
                     </div>
                     <div className="register-input-container reg-email">
-                        <input type="email" placeholder='Enter Email' />
+                        <input onChange={(e)=>handelInput(e)} name='email' type="email" placeholder='Enter Email' required/>
                         <div className="verify-email">
                             <button>Verify</button>
                             <input type="text" placeholder='Enter OTP' />
@@ -58,16 +97,18 @@ export default function Signup() {
                     </div>
                     <div className="register-input-container reg-username">
                         <img src={userlogo} alt="" />
-                        <input type="text" placeholder='Enter Username' />
+                        <input onChange={(e)=>handelInput(e)} name='username' type="text" placeholder='Enter Username' required/>
                     </div>
                     <div className="register-input-container reg-password">
                         <img src={keylogo} alt="" />
-                        <input type="text" placeholder='Enter Password' />
+                        <input onChange={(e)=>handelInput(e)} name='password' type="text" placeholder='Enter Password' required/>
                     </div>
                     <div className="register-input-container reg-btn">
                         <input type="submit" value="Register" />
                     </div>
                 </form>
+            </div>
+            {formError && <p className='error-section'>{formError}</p>}
             </div>
         </div>
     );
