@@ -1,19 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
 import Navbar from './Components/comp/Navbar';
-import { auth } from './config/firebase';
+import { auth, storage } from './config/firebase';
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import Dialog from './Components/comp/Dialog';
 import ImgSlider from './Components/comp/ImgSlider';
+import {ref,getDownloadURL,getMetadata, listAll} from 'firebase/storage'
 
 
 function App() {
 
-  var navigate = useNavigate();
+  // states ---------
   const [isUserLoggedIn, setIsUserLoggedIn] = useState();
   const [showDilog,setShowDilog] = useState(false);
+  const [imgnames,setImgNames] = useState({});
 
+  // other variable ---------------
+  var navigate = useNavigate();
+
+  // function 
   useEffect(()=>{
     const isAuthLoggedIn = auth.onAuthStateChanged((user)=>{
       if(user){
@@ -31,9 +37,20 @@ function App() {
 
       }
     });
-
-
   },[]);
+
+  const readData= async()=>{
+    try{
+
+      const folderRef= ref(storage,'moviesimg');
+      const folderList = await listAll(folderRef);
+      const name = folderList.items.map(item=>item.fullPath); 
+      setImgNames((prevstate)=>({...prevstate,name}));
+      console.log(imgnames);
+    }catch(err){
+      console.log("error : ",err);
+    }
+  }
 
 
   return (
@@ -48,6 +65,16 @@ function App() {
 
       <div className="imgslider-container-app">
         <ImgSlider/>
+      </div>
+
+      <button onClick={readData}>read</button>
+
+      <div className="img-container-api">
+        {imgnames.map((imgname,index)=>(
+          <h1>{imgname}</h1>
+        )
+        )}
+
       </div>
 
     </div>

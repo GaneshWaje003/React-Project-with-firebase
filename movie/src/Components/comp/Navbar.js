@@ -37,6 +37,7 @@ export default function Navbar() {
         console.log("err happen at logout : ",err);
       });
     }else{
+      navigate('/');
       console.log("Already signout ");
     }
   }
