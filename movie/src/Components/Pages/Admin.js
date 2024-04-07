@@ -9,6 +9,8 @@ export default function Admin() {
   
     const [upImg,setUpImg] = useState();
     const [imgUpError,setImgUpError] = useState();
+    const [movieCtg,setMovieCtg] = useState();
+
     const handleImg=(e)=>{
         setUpImg(e.target.files[0]);
     }
@@ -16,46 +18,42 @@ export default function Admin() {
 
    const [movieInfo, setMovieInfo] = useState({});
 
-    const uploadImg = () =>{
+   const uploadImg = () => {
+       
+       if (!movieInfo.mname || movieInfo.mname.trim() === "") {
+           setImgUpError("Set the title of the image.");
+           return;
+        }
 
-        if(upImg == null) return;
-
-        if (!upImg) {
+        if (upImg == null) {
             setImgUpError("No image selected for upload.");
-            console.log('No image selected for upload.');
-            return;
-        }
-    
-        if (!movieInfo.mname || movieInfo.mname.trim() === "") {
-            setImgUpError("Set the title of the image.");
-            console.log('Set the title of the image.');
             return;
         }
 
-        const imgRef = ref(storage,'moviesimg/'+ movieInfo.mname);
+    const imgRef = ref(storage, movieCtg + movieInfo.mname);
 
-        uploadBytes(imgRef,upImg,movieInfo).then((snapshot)=>{
-
-            const metadata = {
-                contentType: 'image/jpeg',
-                customMetadata: {
-                    mname: movieInfo.mname,
-                    minfo: movieInfo.minfo,
-                    mrating: movieInfo.mrating,
-                }
-            };
-
-            updateMetadata(snapshot.ref,metadata).then(()=>{console.log("Successfull metaupdate")}).catch
-            ((err)=>{console.log("error",err)})
-
-            console.log("Successfully uploaded")
-        }).catch((err)=>{
-            console.log("error : ",err);
-        });
+    uploadBytes(imgRef, upImg, movieInfo).then((snapshot) => {
+        const metadata = {
+            contentType: 'image/jpeg',
+            customMetadata: {
+                mname: movieInfo.mname,
+                minfo: movieInfo.minfo,
+                mrating: movieInfo.mrating,
+                mlink:movieInfo.mtrailer,
+                mdown:movieInfo.mdownurl
+            }
+        };
 
         
-        
-    };
+        updateMetadata(snapshot.ref, metadata)
+            .then(() => { console.log("Successfully uploaded",); })
+            .catch((err) => { console.log("Error updating metadata:", err); });
+
+    }).catch((err) => {
+        console.log("Error uploading image:", err);
+    });
+};
+
 
     const handleMovieData = (e) =>{
         setMovieInfo((prevState)=>({
@@ -66,6 +64,16 @@ export default function Admin() {
         console.log(movieInfo);
     }
 
+    // getting movie category
+    const getMovieCategory = (e) =>{
+
+            if (e.target.value === 'Select Movie') {
+                setImgUpError("Select the movie category");
+            } else {
+                setMovieCtg(e.target.value + '/');
+            }
+        
+    }   
 
 
     return (
@@ -85,11 +93,18 @@ export default function Admin() {
                     <input type="text" onChange={(e)=>handleMovieData(e)} name='mname' placeholder='Movies Name' />
                     <input type="text" onChange={(e)=>handleMovieData(e)} name='minfo' placeholder='Movies info' />
                     <input type="text" onChange={(e)=>handleMovieData(e)} name='mrating' placeholder='Movies imdb rating' />
+                    <input type="text" onChange={(e)=>handleMovieData(e)} name='mtrailer' placeholder='Movies trailer url' />
+                    <input type="text" onChange={(e)=>handleMovieData(e)} name='mdownurl' placeholder='Movies Download url' />
+                    <select className='movie-categary' onChange={(e)=>getMovieCategory(e)} >
+                    <option value="" disabled >Select a car</option>
+                        <option value="bollywood">bollywood</option>
+                        <option value="hollywood">hollywood</option>
+                        <option value="south">south</option>
+                    </select>
                     <input type="file" onChange={(e)=>handleImg(e)} />
-                    { imgUpError && <p>{imgUpError}</p>}
                 </form>
+                    { imgUpError && <p className='error-section'>{imgUpError}</p>}
             </div>
-
         </div>
 
         <div className="floating-button">

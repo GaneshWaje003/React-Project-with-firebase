@@ -1,0 +1,27 @@
+.listallmovies-main{
+    padding-inline: 2rem;
+}
+
+
+.all-movies-container{
+
+}
+
+.movies-list-continer{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust minmax values as needed */
+    gap: 1rem; 
+}
+
+.api-movie-container-listmovie{
+    width: 30vh;
+    height: 40vh;
+    margin-right: 1rem;
+}
+.api-movie-container-listmovie img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.3rem;
+
+}

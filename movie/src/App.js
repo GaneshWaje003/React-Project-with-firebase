@@ -6,80 +6,185 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import Dialog from './Components/comp/Dialog';
 import ImgSlider from './Components/comp/ImgSlider';
-import {ref,getDownloadURL,getMetadata, listAll} from 'firebase/storage'
-
+import { ref, getDownloadURL, getMetadata, listAll } from 'firebase/storage'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
   // states ---------
   const [isUserLoggedIn, setIsUserLoggedIn] = useState();
-  const [showDilog,setShowDilog] = useState(false);
-  const [imgnames,setImgNames] = useState({});
+  const [showDilog, setShowDilog] = useState(false);
+  const [imgnames, setImgNames] = useState({});
+
+  const [data, setData] = useState({
+    bollywood: [],
+    hollywood: [],
+    south: [],
+  })
 
   // other variable ---------------
   var navigate = useNavigate();
 
+
   // function 
-  useEffect(()=>{
-    const isAuthLoggedIn = auth.onAuthStateChanged((user)=>{
-      if(user){
+  useEffect(() => {
+    const isAuthLoggedIn = auth.onAuthStateChanged((user) => {
+      if (user) {
         console.log("user Is Siggned in");
         setIsUserLoggedIn(true);
-      }else{
+        readData('hollywood');
+        readData('bollywood');
+        readData('south');
+      } else {
         console.log("user Is Siggned out");
         setIsUserLoggedIn(false);
         setShowDilog(true);
-        
-        setTimeout(()=>{
+
+        setTimeout(() => {
           setShowDilog(false);
           navigate('/login');
-        },3000);
+        }, 3000);
 
       }
     });
-  },[]);
+  }, []);
 
-  const readData= async()=>{
-    try{
+  const readData = async (folder) => {
+    try {
 
-      const folderRef= ref(storage,'moviesimg');
+      const folderRef = ref(storage, folder);
       const folderList = await listAll(folderRef);
-      const name = folderList.items.map(item=>item.fullPath); 
-      setImgNames((prevstate)=>({...prevstate,name}));
-      console.log(imgnames);
-    }catch(err){
-      console.log("error : ",err);
+      const imgDetails = await Promise.all(
+        folderList.items.map(async itemref => {
+          const url = await getDownloadURL(itemref);
+          const metadata = await getMetadata(itemref);
+          const name = itemref.name;
+          return { name, url, metadata };
+        })
+      );
+
+
+      setData(prevState => ({
+        ...prevState,
+        [folder]: imgDetails
+      }));
+
+      await console.log(folder);
+    } catch (err) {
+      console.log("error : ", err);
     }
   }
 
 
+  //open movie section
+  const openMovie = (metadata, url) => {
+    const customMetadata = metadata.customMetadata;
+    toast("open mvoie!");
+    navigate('/movieInfo', { state: { customMetadata, url } })
+  }
+
+  //listing all movies 
+  const listAllMovies = (sendState) => {
+
+    console.log(imgnames);
+    navigate('/listAllMovies', { state: { sendState } })
+  }
+
+
   return (
-   <div className="app-main">
-    {showDilog && <Dialog title={"About Login"} info={"Login first to access the data of Website"} />}
-    
-    <div className="navbar-container-home">
-      <Navbar/>
-    </div>
+    <div className="app-main">
+      {showDilog && <Dialog title={"About Login"} info={"Login first to access the data of Website"} />}
 
-    <div className="main-home">
-
-      <div className="imgslider-container-app">
-        <ImgSlider/>
+      <div className="navbar-container-home">
+        <Navbar />
       </div>
 
-      <button onClick={readData}>read</button>
+      <div className="main-home">
 
-      <div className="img-container-api">
-        {imgnames.map((imgname,index)=>(
-          <h1>{imgname}</h1>
-        )
-        )}
+        <div className="imgslider-container-app">
+          <ImgSlider />
+        </div>
+
+
+
+
+        <div className="movie-container hollywood">
+
+
+          <div className="header-section-movies">
+            <p>{"Hollywood Movies"}</p>
+            <button onClick={(e) => listAllMovies(data.hollywood)} >&gt;</button>
+          </div>
+
+
+
+
+          <div className="img-container-api">
+
+            {Object.values(data.hollywood).map((imgData, index) => (
+              <div className="card-container" key={index}>
+
+                <div onClick={() => openMovie(imgData.metadata, imgData.url)} className="img-card">
+                  <img src={imgData.url} />
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="movie-container bollywood">
+
+
+          <div className="header-section-movies">
+            <p>{"Bollywood Movies"}</p>
+            <button onClick={(e) => listAllMovies(data.bollywood)} >&gt;</button>
+          </div>
+
+          <div className="img-container-api">
+
+            {Object.values(data.bollywood).map((imgData, index) => (
+              <div className="card-container" key={index}>
+
+                <div onClick={() => openMovie(imgData.metadata, imgData.url)} className="img-card">
+                  <img src={imgData.url} />
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="movie-container bollywood">
+
+
+          <div className="header-section-movies">
+            <p>{"South Movies"}</p>
+            <button onClick={(e) => listAllMovies(data.south)} >&gt;</button>
+          </div>
+
+          <div className="img-container-api">
+
+            {Object.values(data.south).map((imgData, index) => (
+              <div className="card-container" key={index}>
+
+                <div onClick={() => openMovie(imgData.metadata, imgData.url)} className="img-card">
+                  <img src={imgData.url} />
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+
+
+
 
       </div>
+      <ToastContainer />
 
-    </div>
-
-   </div>
+    </div >
   );
 }
 

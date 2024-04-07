@@ -5,9 +5,9 @@
 }
 
 :root{
-  --body-color:rgb(15, 83, 156);
+  --body-color:rgb(25, 48, 165);
   --body-background:#ffffff;
-  --body-nav-color:navy;
+  --body-nav-color:rgb(67, 67, 198);
   --body-login-back:rgb(117, 179, 245);
   --body-nav-back:#f4f8fd;
 }
@@ -33,4 +33,99 @@
   flex:1;
   /* border: 1px solid black; */
   
+  padding-inline: 1rem;
+}
+
+.movie-container{
+  padding:1rem;
+  /* background: whitesmoke; */
+  /* border: 1px solid black; */
+}
+
+
+.header-section-movies{
+  margin: 0.5rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-section-movies button{
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  padding:0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.img-container-api{
+  display: flex;
+}
+
+.card-container{
+  width:17vw;
+  height:20rem;
+  background-color: rgb(231, 220, 220);
+  border-radius: 1.5rem;
+  cursor: pointer;
+  margin-right: 1rem;
+  position: relative;
+  display: flex;
+}
+
+.img-card{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  height: 100%;
+  animation: tillImgCome 0.5s 3 ;
+  width: 100%;
+  border-radius: 1.5rem;
+}
+
+.img-card img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 1.5rem;
+}
+
+.title-card{ 
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0.5rem;
+  /* width: 100%; */
+}
+
+.title-card p{
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adjust shadow as needed */
+  margin: 0; /* Reset default margin */
+  font-size: 1.4rem;
+}
+
+.img-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.1); /* Adjust opacity as needed */
+}
+
+.card-container:hover .img-card::before{
+  background-color: rgba(0, 0, 0, 0); /* Adjust opacity as needed */
+}
+
+@keyframes tillImgCome  {
+    0%{
+      background-color: rgba(0,0,0,0.2);
+    }50%{
+      background-color: rgba(255,255,255,0.2);
+    }
 }

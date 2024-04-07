@@ -1,0 +1,48 @@
+.movie-info-main{
+    /* background-color: black; */
+
+}
+
+.movie-info-container{
+    display: flex;
+    flex-direction: column;
+    padding-inline:2rem;
+    padding-block: 2rem;
+}
+
+
+.movie-profile-trailer-container{
+    display: flex;
+    margin-bottom: 2rem;
+    height: 50vh;
+    justify-content:space-between;
+}
+
+.movie-profile{
+
+}
+
+.movie-profile img{
+    width: 30vw;
+    height: 100%;
+    object-fit: cover;
+}
+
+.trailer-container{
+
+    display: flex;
+    justify-content:flex-end;
+    width: 100%;
+}
+
+.trailer-container iframe{
+    /* border: 1px solid var(--body-background); */
+    width: 70%;
+    height: 100%;
+    box-shadow: 1px 1px 20px 1px rgba(255,255,255,0.7);
+}
+
+.movie-information{
+    max-height: 11rem;
+    overflow: hidden;
+}

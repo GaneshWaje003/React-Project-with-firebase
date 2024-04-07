@@ -5,7 +5,8 @@ import keylogo from '../img/key_svg.svg';
 import { auth, db } from '../../config/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import Navbar from '../comp/Navbar';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default function Signup() {
@@ -13,7 +14,17 @@ export default function Signup() {
     const moviecollectionRef = collection(db, "users");
     const [userData,setUserData]=useState({});
     const [formError,setFormError]=useState('');
+    
+    
+    // crating the toast 
+    const succTOast = (msg) => toast.success(msg,{
+        position:"top-center"
+    });
 
+    const errTOast = (msg) => toast.error(msg,{
+        position:"top-center"
+    });
+    
 
     const registerUser = async (event) => {
         
@@ -37,12 +48,13 @@ export default function Signup() {
                 username:userData.username
             }).then(()=>{
                 console.log("fire store success");
+                succTOast("user data uploaded to firestore");
             });
-
+            
             await createUserWithEmailAndPassword(auth,userData.email,userData.password).then(()=>{
-                console.log('User Created');
+                succTOast("user created successfully");
             }).catch((err)=>{
-                console.log("error come while creating user : ",err);
+                errTOast(`error come while creating ${err}`);
             });
         }
 
@@ -54,6 +66,7 @@ export default function Signup() {
             ...prevState,[e.target.name]:e.target.value
         }));
     }   
+
 
     return (
         <div className='register-main'>
@@ -67,14 +80,13 @@ export default function Signup() {
 
             <div className="container-form">
                 <form onSubmit={registerUser}>
-                    <div className="register-input-container header-reg">
+                    <div className="header-reg">
                         <h1>REGISTER</h1>
                     </div>
                     <div className="register-input-container reg-fullname">
                         <input onChange={(e)=>handelInput(e)} name='userfullname' type="text" placeholder='Enter Full Name ' required />
                     </div>
                     <div className="register-input-container reg-birthday">
-                        <label htmlFor="birthdate">BirthData</label>
                         <input onChange={(e)=>handelInput(e)} id="birthdate" type="date" />
                     </div>
                     <div className="register-input-container reg-gender">
@@ -110,6 +122,7 @@ export default function Signup() {
             </div>
             {formError && <p className='error-section'>{formError}</p>}
             </div>
+            <ToastContainer />
         </div>
     );
 }

@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { auth , googleProvider } from '../../config/firebase'
 import { createUserWithEmailAndPassword ,signOut , signInWithPopup, signInWithEmailAndPassword, sendPasswordResetEmail} from 'firebase/auth'
 import { NavLink } from 'react-router-dom'
-import Dialog from '../comp/Dialog';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
 
@@ -18,18 +19,28 @@ export default function Login() {
     const [currUserImgUrl,setCurrUserImgUrl]=useState('');
     
 
+    const succToast =(msg)=>{
+        toast.success(msg)
+    };
+
+    const errToast =(msg)=>{
+        toast.error(msg)
+    };
+
+    const donToast =(msg)=>{
+        toast.done(msg)
+    };
+
+    
     const loggout = () =>{
-            // signOut(auth).then(()=>{
-            //     console.log("signout");
-            // })
 
             const isSignout = auth.onAuthStateChanged((user)=>{
                 if(user){
-                    console.log("user logged in ");
+                    succToast("user already logged in");
                 }else{
                     console.log("user logged out ");
                 }
-            })
+            });
     }
     
     // forgot password 
@@ -59,29 +70,31 @@ export default function Login() {
                 setCurrUserImgUrl(userCred.user.photoURL);
                 changeProfileUrl();
                 SetLoginError("");
+                succToast(`${userData.email} user logged in`)
                 navigate('/');
             }).catch((err)=>{
                 SetLoginError(err.message);
+                errToast("Error coming while login")
             });
-
+            
             if(auth.currentUser.email == "ganeshwaje233@gmail.com"){
                 navigate('/admin');
             }
-
-
+            
+            
         }catch(err){
             console.log("Signin Error : ",err);
         }        
     }
-
+    
     const googleSignIn = async () =>{
         try{
             await signInWithPopup(auth,googleProvider).then(()=>{
-                console.log("google sign in succesful");
+                succToast(`${userData.email} user logged in`)
                 navigate('/');
             });
         }catch(err){
-            console.log("error at signwithGOogle : ",err);
+            errToast(`${err} error come `)
         }
         await changeProfileUrl();
     }

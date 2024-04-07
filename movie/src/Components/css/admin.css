@@ -13,6 +13,7 @@
 
 .floating-button button{
     width: 3rem;
+    cursor: pointer;
     height: 3rem;
     font-size: 1rem;
     color: var(--body-background);
@@ -29,28 +30,44 @@
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     
 }
 
 .admin-form-container form{
-    border: 1px solid black;
+    background-color: var(--body-color);
     border-radius: 1rem;
     width: 30%;
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 1rem;
+    margin-bottom: 1rem;
 }
 
 .admin-form-container input{
     width: 80%;
-    margin-bottom: 1rem ;
+    margin-bottom: 2rem ;
     padding: 0.5rem 1rem;
 }
 
+.title-form-admin h1{}
+
 .title-form-admin{
-    margin-bottom: 1rem ;
+    margin-bottom: 2rem ;
     text-align: center;
+    color: var(--body-background);
 }
+
+.movie-categary{
+    width: 80%;
+    margin-bottom: 1rem ;
+    padding: 0.5rem 1rem;
+    background-color: white;
+}
+
+.error-section{
+    font-size: 1.4rem;
+}   

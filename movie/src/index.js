@@ -7,6 +7,8 @@ import { BrowserRouter,Routes ,Route } from 'react-router-dom'
 import Login from './Components/Pages/Login';
 import Signup from './Components/Pages/Signup';
 import Admin from './Components/Pages/Admin';
+import MovieInfo from './Components/Pages/MovieInfo';
+import ListAllMovie from './Components/Pages/ListAllMovie';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,6 +21,8 @@ root.render(
             <Route path='/login' element={<Login/>} />
             <Route path='/register' element={<Signup  />} />
             <Route path='/admin' element={<Admin  />} />
+            <Route path='/movieInfo' element={<MovieInfo  />} />
+            <Route path='/listAllMovies' element={<ListAllMovie />} />
 
       </Routes>
     
