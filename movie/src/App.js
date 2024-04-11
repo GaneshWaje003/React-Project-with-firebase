@@ -16,6 +16,7 @@ function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState();
   const [showDilog, setShowDilog] = useState(false);
   const [imgnames, setImgNames] = useState({});
+  const [imgSlider,setImgSlider] = useState();
 
   const [data, setData] = useState({
     bollywood: [],
@@ -26,7 +27,6 @@ function App() {
   // other variable ---------------
   var navigate = useNavigate();
 
-
   // function 
   useEffect(() => {
     const isAuthLoggedIn = auth.onAuthStateChanged((user) => {
@@ -36,6 +36,7 @@ function App() {
         readData('hollywood');
         readData('bollywood');
         readData('south');
+
       } else {
         console.log("user Is Siggned out");
         setIsUserLoggedIn(false);
@@ -49,6 +50,17 @@ function App() {
       }
     });
   }, []);
+
+
+  // for storing the newly added movies 
+  useEffect(() => {
+    for(const cat in data){
+      const lastItem = data[cat][data[cat].length - 1];
+      setImgSlider(lastItem);
+    }
+  }, [data]);
+  
+
 
   const readData = async (folder) => {
     try {
@@ -97,15 +109,14 @@ function App() {
       {showDilog && <Dialog title={"About Login"} info={"Login first to access the data of Website"} />}
 
       <div className="navbar-container-home">
-        <Navbar />
+        <Navbar imgInfo={data} />
       </div>
 
       <div className="main-home">
 
         <div className="imgslider-container-app">
-          <ImgSlider />
+          <ImgSlider states={data} />
         </div>
-
 
 
 
@@ -170,7 +181,7 @@ function App() {
               <div className="card-container" key={index}>
 
                 <div onClick={() => openMovie(imgData.metadata, imgData.url)} className="img-card">
-                  <img src={imgData.url} />
+                  { imgData.url ? ( <img src={imgData.url} />):(<div className='placeholder'></div>)}
                 </div>
 
               </div>

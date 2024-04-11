@@ -10,9 +10,11 @@
   --body-nav-color:rgb(67, 67, 198);
   --body-login-back:rgb(117, 179, 245);
   --body-nav-back:#f4f8fd;
+  --body-main-color:#fff;
 }
 
 [data-theme="dark"]{
+  --body-main-color:#000;
   --body-color:#fff;
   --body-background:rgb(15, 83, 156);
   --body-nav-color:#fff;
@@ -23,6 +25,7 @@
 .app-main{
   display: flex;
   flex-direction: column;
+  /* background-color: var(--body-background); */
 }
 
 .navbar-container-home{
@@ -31,15 +34,12 @@
 
 .main-home{
   flex:1;
-  /* border: 1px solid black; */
-  
   padding-inline: 1rem;
 }
 
 .movie-container{
-  padding:1rem;
-  /* background: whitesmoke; */
-  /* border: 1px solid black; */
+  margin-bottom: 1rem;
+  backdrop-filter: blur(10px);
 }
 
 
@@ -76,13 +76,13 @@
 }
 
 .img-card{
-  display: flex;
-  justify-content: center;
+  display: block;
   margin-bottom: 0.5rem;
   height: 100%;
   animation: tillImgCome 0.5s 3 ;
   width: 100%;
   border-radius: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .img-card img{
@@ -90,6 +90,13 @@
   width: 100%;
   object-fit: cover;
   border-radius: 1.5rem;
+  /* filter: blur(2px); */
+  transition: all 0.5s ease;
+}
+
+.img-card img:hover{
+  
+  filter: blur(0px);
 }
 
 .title-card{ 
@@ -105,6 +112,16 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adjust shadow as needed */
   margin: 0; /* Reset default margin */
   font-size: 1.4rem;
+}
+
+.placeholder{
+  display: block;
+  margin-bottom: 0.5rem;
+  height: 100%;
+  animation: tillImgCome 0.5s 3 ;
+  width: 100%;
+  border-radius: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .img-card::before {

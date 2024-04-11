@@ -1,21 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/imgslider.css';
 
-import img1 from '../img/img1.jpg';
-import img2 from '../img/img2.jpg';
-import img3 from '../img/img3.jpg';
-import img4 from '../img/img4.jpg';
-
-export default function ImgSlider() {
+export default function ImgSlider({states}) {
   const [imgPointer, setImgPointer] = useState(0);
-  const imgList = [img1, img2, img3, img4];
+  const [imglist,setImgList] = useState([]);
+
+  useEffect(() => {
+
+    let images = [];
+
+    if(states){
+      for(const obj in states){
+          for(const sub in states[obj]){
+            console.log(states[obj][sub]);
+            images.push(states[obj][sub]);
+          }
+      }
+      setImgList(images);
+    }
+
+  }, [states]);
+  
 
   const leftRotate = () => {
-    setImgPointer((prevPointer) => (prevPointer + 1) % imgList.length);
+    setImgPointer((prevPointer) => (prevPointer + 1) % imglist.length);
   };
 
   const rightRotate = () => {
-    setImgPointer((prevPointer) => (prevPointer - 1 + imgList.length) % imgList.length);
+    setImgPointer((prevPointer) => (prevPointer - 1 + imglist.length) % imglist.length);
   };
 
   return (
@@ -24,7 +36,11 @@ export default function ImgSlider() {
         <a onClick={leftRotate} href="#">&lt;</a>
         <div className="images-imgslider">
           <div className="img-holder-1">
-            <img src={imgList[imgPointer]} style={{transition:'all 0.5s ease'}} alt="" />
+           
+          {
+            imglist.length > 0 && <img src={imglist[imgPointer].url} alt="" />
+          }
+
           </div>  
         </div>
         <a onClick={rightRotate} href="#">&gt;</a>

@@ -1,45 +1,54 @@
 import React from 'react';
 import '../css/listallmovies.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ListAllMovie() {
-  const { state } = useLocation();
+    const { state } = useLocation();
+    const navigate = useNavigation();
 
-  console.log(state,"it is state");
+    console.log(state, "it is state");
 
-  return (
-    <div className='listallmovies-main'>
+    const openMovie = (metadata, url) => {
+        const customMetadata = metadata.customMetadata;
+        toast("open mvoie!");
+        navigate('/movieInfo', { state: { customMetadata, url } })
+    }
 
-        {state &&   
-        (
+    return (
+        <div className='listallmovies-main'>
 
-            <div className="all-movies-container">
+            {state &&
+                (
 
-                <div className="movies-list-continer">
+                    <div className="all-movies-container">
 
-                    {state.sendState.map((imgdata,index)=>(
+                        <div className="movies-list-continer">
 
-                        <div className="api-movie-container-listmovie">
-                            <img src={imgdata.url} alt="" />
-                            <p>{imgdata.name}</p>
+                            {state.sendState.map((imgdata, index) => (
+
+                                <div className="api-movie-container-listmovie">
+                                    <img onClick={openMovie(imgdata.metadata, imgdata.url)} src={imgdata.url} alt="" />
+                                    <p>{imgdata.name}</p>
+                                </div>
+
+                            ))}
+
                         </div>
 
-                    ))}
 
-                </div>    
+                    </div>
 
-
-            </div>
-        
-        )
+                )
 
 
-        }
-        
-        {!state.imgnames || !state.imgnames.length === 0 &&
-            <p>data is not recegving</p>
-        }
-   
-    </div>
-  );
+            }
+
+            {!state.imgnames || !state.imgnames.length === 0 &&
+                <p>data is not recegving</p>
+            }
+
+        </div>
+    );
 }

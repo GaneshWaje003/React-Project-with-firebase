@@ -7,7 +7,7 @@ import searchLogo from '../img/search.svg'
 import { useNavigate } from 'react-router-dom';
 
 
-export default function Navbar() {
+export default function Navbar({imgInfo}) {
 
   const navigate = useNavigate(); 
 
@@ -22,6 +22,15 @@ export default function Navbar() {
     })
 
   },[]);
+
+  const openType = (name) =>{
+    
+  } 
+
+
+  const readData=()=>{
+
+  }
 
 
   const setDarkMode = ()=>{
@@ -69,9 +78,9 @@ export default function Navbar() {
               <div className="dropdown">
                 <a className='hover-for-menu' href="#">Type</a>
                 <div className="dropdown-options">
-                <a href="#">Hollywood</a>
-                <a href="#">Bollywood</a>
-                <a href="#">Action</a>
+                <a href="#" onClick={()=>openType('hollywood')} >Hollywood</a>
+                <a href="#" onClick={()=>openType('bollywood')} >Bollywood</a>
+                <a href="#" onClick={()=>openType('south')} >South</a>
                 </div>
               </div>
               </li>
