@@ -3,7 +3,7 @@ import './App.css';
 import Navbar from './Components/comp/Navbar';
 import { auth, storage } from './config/firebase';
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Dialog from './Components/comp/Dialog';
 import ImgSlider from './Components/comp/ImgSlider';
 import { ref, getDownloadURL, getMetadata, listAll } from 'firebase/storage'
@@ -16,7 +16,7 @@ function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState();
   const [showDilog, setShowDilog] = useState(false);
   const [imgnames, setImgNames] = useState({});
-  const [imgSlider,setImgSlider] = useState();
+  const [imgSlider, setImgSlider] = useState();
 
   const [data, setData] = useState({
     bollywood: [],
@@ -54,12 +54,12 @@ function App() {
 
   // for storing the newly added movies 
   useEffect(() => {
-    for(const cat in data){
+    for (const cat in data) {
       const lastItem = data[cat][data[cat].length - 1];
       setImgSlider(lastItem);
     }
   }, [data]);
-  
+
 
 
   const readData = async (folder) => {
@@ -89,6 +89,26 @@ function App() {
   }
 
 
+  const flexitemref = useRef(null);
+  //scrollRight effect
+  const scrollRight =()=>{
+
+    if(flexitemref.current){
+      flexitemref.current.scrollLeft+=150;
+      // alert("clicked")
+    }
+
+  }
+
+  const scrollleft =()=>{
+
+    if(flexitemref.current){
+      flexitemref.current.scrollLeft-=150;
+      // alert("clicked")
+    }
+
+  }
+
   //open movie section
   const openMovie = (metadata, url) => {
     const customMetadata = metadata.customMetadata;
@@ -97,10 +117,8 @@ function App() {
   }
 
   //listing all movies 
-  const listAllMovies = (sendState) => {
-
-    console.log(imgnames);
-    navigate('/listAllMovies', { state: { sendState } })
+  const listAllMovies = (sendState, name) => {
+    navigate('/listAllMovies', { state: { sendState,name } })
   }
 
 
@@ -121,17 +139,14 @@ function App() {
 
 
         <div className="movie-container hollywood">
-
-
           <div className="header-section-movies">
             <p>{"Hollywood Movies"}</p>
-            <button onClick={(e) => listAllMovies(data.hollywood)} >&gt;</button>
+            <button onClick={(e) => listAllMovies(data.hollywood,'Hollywood')} >&gt;</button>
           </div>
 
+          <div ref={flexitemref} className="img-container-api">
 
-
-
-          <div className="img-container-api">
+        <a href="#" onClick={(e)=>{e.preventDefault(); scrollleft();}} className='movie-scroll scroll-left'>&lt;</a>
 
             {Object.values(data.hollywood).map((imgData, index) => (
               <div className="card-container" key={index}>
@@ -142,18 +157,21 @@ function App() {
 
               </div>
             ))}
+            <a href="#" className='movie-scroll scroll-right' onClick={(e)=>{e.preventDefault();  scrollRight(); }}>&gt;</a>
           </div>
         </div>
 
+
+
         <div className="movie-container bollywood">
-
-
           <div className="header-section-movies">
-            <p>{"Bollywood Movies"}</p>
-            <button onClick={(e) => listAllMovies(data.bollywood)} >&gt;</button>
+            <p>{"bollywood Movies"}</p>
+            <button onClick={(e) => listAllMovies(data.bollywood , 'Bollywood')} >&gt;</button>
           </div>
 
           <div className="img-container-api">
+
+        <a href="#" onClick={(e)=>{e.preventDefault(); scrollleft();}} className='movie-scroll scroll-left'>&lt;</a>
 
             {Object.values(data.bollywood).map((imgData, index) => (
               <div className="card-container" key={index}>
@@ -164,28 +182,31 @@ function App() {
 
               </div>
             ))}
+            <a href="#" className='movie-scroll scroll-right' onClick={(e)=>{e.preventDefault();  scrollRight(); }}>&gt;</a>
           </div>
         </div>
 
-        <div className="movie-container bollywood">
 
-
+        <div className="movie-container south">
           <div className="header-section-movies">
-            <p>{"South Movies"}</p>
-            <button onClick={(e) => listAllMovies(data.south)} >&gt;</button>
+            <p>{"south Movies"}</p>
+            <button onClick={(e) => listAllMovies(data.south , 'South')} >&gt;</button>
           </div>
 
           <div className="img-container-api">
+
+        <a href="#" onClick={(e)=>{e.preventDefault(); scrollleft();}} className='movie-scroll scroll-left'>&lt;</a>
 
             {Object.values(data.south).map((imgData, index) => (
               <div className="card-container" key={index}>
 
                 <div onClick={() => openMovie(imgData.metadata, imgData.url)} className="img-card">
-                  { imgData.url ? ( <img src={imgData.url} />):(<div className='placeholder'></div>)}
+                  <img src={imgData.url} />
                 </div>
 
               </div>
             ))}
+            <a href="#" className='movie-scroll scroll-right' onClick={(e)=>{e.preventDefault();  scrollRight(); }}>&gt;</a>
           </div>
         </div>
 

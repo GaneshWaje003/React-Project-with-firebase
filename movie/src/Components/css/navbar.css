@@ -21,17 +21,30 @@ nav ul{
     align-items: center;
 }
 
+.title-website h2 {
+    color: var(--body-background);
+
+    margin-right: 4rem;
+    margin-left: 1rem;
+}
+
 nav li{
     list-style: none;
+    /* border: 1px solid black; */
 }
 
 nav a{
+    position: relative;
     color: var(--body-background);
     text-decoration: none;
     display: block;
     margin-right:4rem;
     font-size: 1.2rem;
     font-weight: 500;
+}
+
+.toHover:hover {
+  
 }
 
 .other-members{

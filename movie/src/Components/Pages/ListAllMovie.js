@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../css/listallmovies.css';
-import { useLocation, useNavigation } from 'react-router-dom';
+import { useLocation, useNavigate, useNavigation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function ListAllMovie() {
     const { state } = useLocation();
-    const navigate = useNavigation();
-
-    console.log(state, "it is state");
+    const navigate = useNavigate();
 
     const openMovie = (metadata, url) => {
         const customMetadata = metadata.customMetadata;
@@ -16,8 +14,17 @@ export default function ListAllMovie() {
         navigate('/movieInfo', { state: { customMetadata, url } })
     }
 
+
     return (
         <div className='listallmovies-main'>
+
+
+            <div className="header-listall">
+                <h1>{state.name} Movies</h1>
+
+                <div className="back-to-home"></div>
+
+            </div>
 
             {state &&
                 (
@@ -26,10 +33,10 @@ export default function ListAllMovie() {
 
                         <div className="movies-list-continer">
 
-                            {state.sendState.map((imgdata, index) => (
+                            {state && state.sendState.map((imgdata, index) => (
 
-                                <div className="api-movie-container-listmovie">
-                                    <img onClick={openMovie(imgdata.metadata, imgdata.url)} src={imgdata.url} alt="" />
+                                <div key={index} className="api-movie-container-listmovie">
+                                    <img className='img-movie-listall' onClick={() => openMovie(imgdata.metadata, imgdata.url)} src={imgdata.url} alt="" />
                                     <p>{imgdata.name}</p>
                                 </div>
 
@@ -45,9 +52,6 @@ export default function ListAllMovie() {
 
             }
 
-            {!state.imgnames || !state.imgnames.length === 0 &&
-                <p>data is not recegving</p>
-            }
 
         </div>
     );

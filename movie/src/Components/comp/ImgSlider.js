@@ -12,7 +12,6 @@ export default function ImgSlider({states}) {
     if(states){
       for(const obj in states){
           for(const sub in states[obj]){
-            console.log(states[obj][sub]);
             images.push(states[obj][sub]);
           }
       }

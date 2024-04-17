@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Navbar from '../comp/Navbar'
 import '../css/admin.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { storage } from '../../config/firebase';
 import {ref, uploadBytes,updateMetadata} from 'firebase/storage'
 import { getMouseEventOptions } from '@testing-library/user-event/dist/utils';
@@ -15,6 +17,15 @@ export default function Admin() {
         setUpImg(e.target.files[0]);
     }
 
+    const notify = (type,msg) =>{
+
+        if(type === 'err'){
+            toast.err(msg);
+        }else{
+            toast.success(msg);
+        }
+
+    }
 
    const [movieInfo, setMovieInfo] = useState({});
 
@@ -46,8 +57,17 @@ export default function Admin() {
 
         
         updateMetadata(snapshot.ref, metadata)
-            .then(() => { console.log("Successfully uploaded",); })
-            .catch((err) => { console.log("Error updating metadata:", err); });
+            .then(() => { 
+                notify('suc',"Data uploaded successfully") 
+                setMovieInfo({
+                    mname: '', 
+                    minfo: '',
+                    mrating: '',
+                    mtrailer: '',
+                    mdownurl: ''
+                });
+            })
+            .catch((err) => { notify('err',`problem while uploading ${err}` ) });
 
     }).catch((err) => {
         console.log("Error uploading image:", err);
@@ -110,7 +130,7 @@ export default function Admin() {
         <div className="floating-button">
             <button onClick={uploadImg} >+</button>
         </div>
-
+        <ToastContainer />
     </div>
   )
 }
